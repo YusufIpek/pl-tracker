@@ -54,7 +54,5 @@ export default function App() {
     return <Login />;
   };
 
-  return (
-    <div className="h-screen max-h-screen	overflow-hidden	">{renderUI()}</div>
-  );
+  return <div className="h-full	overflow-hidden">{renderUI()}</div>;
 }
