@@ -40,9 +40,7 @@ export default function App() {
       return (
         <>
           <Header
-            photoURL={
-              'https://static0.cbrimages.com/wordpress/wp-content/uploads/2021/04/Ichigo.jpg'
-            }
+            photoURL={user?.photoURL ? user?.photoURL : ''}
             displayName={user?.displayName ? user.displayName : ''}
           />
 
