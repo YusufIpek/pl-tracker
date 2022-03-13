@@ -1,45 +1,62 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { User } from 'firebase/auth';
+import { useEffect, useState } from 'react';
+import Input from './Components/Input';
+import { checkRedirectUriResult, getLoggedInUser } from './Firebase/Firebase';
+import Footer from './Pages/Footer';
+import Header from './Pages/Header';
+import Login from './Pages/Login';
+import PrivateLessonsShow from './Pages/Content';
+import { fetchAllData } from './Redux/slicer';
+import { store } from './Redux/store';
+import Loading from './Pages/Loading';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    (async () => {
+      const redirected = await checkRedirectUriResult();
+      if (redirected) {
+        const user = await getLoggedInUser();
+        setUser(user);
+
+        if (user) {
+          // initialize data -> fetch data from firebase
+          store.dispatch(fetchAllData());
+        }
+      }
+
+      setIsLoading(false);
+    })();
+  }, []);
+
+  const renderUI = () => {
+    if (isLoading) {
+      return <Loading />;
+    }
+
+    if (user) {
+      return (
+        <>
+          <Header
+            photoURL={
+              'https://static0.cbrimages.com/wordpress/wp-content/uploads/2021/04/Ichigo.jpg'
+            }
+            displayName={user?.displayName ? user.displayName : ''}
+          />
+
+          <Footer />
+          <Input />
+          <PrivateLessonsShow />
+        </>
+      );
+    }
+
+    return <Login />;
+  };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+    <div className="h-screen max-h-screen	overflow-hidden	">{renderUI()}</div>
+  );
 }
-
-export default App
