@@ -1,14 +1,14 @@
 import { User } from 'firebase/auth';
 import { useEffect, useState } from 'react';
-import Input from './Components/Input';
 import { checkRedirectUriResult, getLoggedInUser } from './Firebase/Firebase';
-import Footer from './Pages/Footer';
 import Header from './Pages/Header';
 import Login from './Pages/Login';
-import PrivateLessonsShow from './Pages/Content';
+import Content from './Pages/Content';
 import { fetchAllData } from './Redux/slicer';
 import { store } from './Redux/store';
 import Loading from './Pages/Loading';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import AddPL from './Pages/AddPL';
 
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -16,15 +16,14 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      const redirected = await checkRedirectUriResult();
-      if (redirected) {
-        const user = await getLoggedInUser();
-        setUser(user);
+      await checkRedirectUriResult();
 
-        if (user) {
-          // initialize data -> fetch data from firebase
-          store.dispatch(fetchAllData());
-        }
+      const user = await getLoggedInUser();
+      setUser(user);
+
+      if (user) {
+        // initialize data -> fetch data from firebase
+        store.dispatch(fetchAllData());
       }
 
       setIsLoading(false);
@@ -44,9 +43,12 @@ export default function App() {
             displayName={user?.displayName ? user.displayName : ''}
           />
 
-          <Footer />
-          <Input />
-          <PrivateLessonsShow />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Content />} />
+              <Route path="/add" element={<AddPL />} />
+            </Routes>
+          </BrowserRouter>
         </>
       );
     }

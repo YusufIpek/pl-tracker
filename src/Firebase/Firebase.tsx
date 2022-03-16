@@ -10,6 +10,7 @@ import {
 } from 'firebase/firestore';
 import { PrivateLesson } from '../Models/PrivateLesson';
 import {
+  browserLocalPersistence,
   browserSessionPersistence,
   getAuth,
   getRedirectResult,
@@ -60,7 +61,7 @@ export async function getPrivateLessons(): Promise<PrivateLesson[]> {
 export async function signInWithGoogle(): Promise<void> {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
-  setPersistence(auth, browserSessionPersistence).then(() => {
+  setPersistence(auth, browserLocalPersistence).then(() => {
     signInWithRedirect(auth, provider);
   });
 }
