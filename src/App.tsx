@@ -1,14 +1,14 @@
 import { User } from 'firebase/auth';
 import { useEffect, useState } from 'react';
-import { checkRedirectUriResult, getLoggedInUser } from './Firebase/Firebase';
-import Header from './Pages/Header';
-import Login from './Pages/Login';
-import Content from './Pages/Content';
-import { fetchAllData } from './Redux/slicer';
-import { store } from './Redux/store';
-import Loading from './Pages/Loading';
+import { checkRedirectUriResult, getLoggedInUser } from './firebase/Firebase';
+import Header from './pages/Header';
+import Login from './pages/Login';
+import Content from './pages/Content';
+import { fetchAllData } from './redux/slicer';
+import { store } from './redux/store';
+import Loading from './pages/Loading';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AddPL from './Pages/AddPL';
+import AddPL from './pages/AddPL';
 
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -38,15 +38,15 @@ export default function App() {
     if (user) {
       return (
         <>
-          <Header
-            photoURL={user?.photoURL ? user?.photoURL : ''}
-            displayName={user?.displayName ? user.displayName : ''}
-          />
-
           <BrowserRouter>
+            <Header
+              photoURL={user?.photoURL ? user?.photoURL : ''}
+              displayName={user?.displayName ? user.displayName : ''}
+            />
             <Routes>
               <Route path="/" element={<Content />} />
               <Route path="/add" element={<AddPL />} />
+              <Route path="/edit/:id" element={<AddPL />} />
             </Routes>
           </BrowserRouter>
         </>

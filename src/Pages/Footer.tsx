@@ -1,5 +1,5 @@
 import React from 'react';
-import { signOut } from '../Firebase/Firebase';
+import { signOut } from '../firebase/Firebase';
 
 export default function Footer() {
   return (

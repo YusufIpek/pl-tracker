@@ -1,6 +1,5 @@
-import { User } from 'firebase/auth';
-import React from 'react';
-import { signOut } from '../Firebase/Firebase';
+import { useNavigate } from 'react-router-dom';
+import { signOut } from '../firebase/Firebase';
 
 export default function Header({
   photoURL,
@@ -9,9 +8,14 @@ export default function Header({
   photoURL: string;
   displayName: string;
 }) {
+  const navigate = useNavigate();
   return (
     <div className="flex items-center justify-between p-2 bg-blue-900 text-white">
-      <div className="ml-2 text-lg">{displayName}</div>
+      <div className="ml-2 text-lg">
+        <span className="cursor-pointer" onClick={() => navigate('/')}>
+          Nachilfe Tracker
+        </span>
+      </div>
       <img
         className="rounded-full w-[50px] h-[50px] object-cover"
         src={photoURL}

@@ -1,13 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
-import ActionButton from '../Components/ActionButton';
-import Input from '../Components/Input';
-import { PrivateLesson } from '../Models/PrivateLesson';
-import { useAppDispatch, useAppSelector } from '../Redux/hooks';
+import ActionButton from '../components/ActionButton';
+import Input from '../components/Input';
+import { PrivateLesson } from '../models/PrivateLesson';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { faTrashCan, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { deletePrivateLesson } from '../Firebase/Firebase';
-import { removePrivateLesson as removeAction } from '../Redux/slicer';
+import { deletePrivateLesson } from '../firebase/Firebase';
+import { removePrivateLesson as removeAction } from '../redux/slicer';
 
 library.add(faTrashCan, faEdit);
 
@@ -41,23 +41,23 @@ export default function Content() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 py-3 pl-3 w-full">
               <div className="flex justify-between sm:block sm:m-auto p-1 sm:p-0">
                 <div className="font-bold text-center">Schüler</div>
-                <div className="w-full text-center">{pL.studentName}</div>
+                <div className="w-full text-center">{pL.student}</div>
+              </div>
+              <div className="flex justify-between sm:block sm:m-auto p-1 sm:p-0">
+                <div className="font-bold text-center">Fach</div>
+                <div className="w-full text-center">{pL.subject}</div>
               </div>
               <div className="flex justify-between sm:block sm:m-auto p-1 sm:p-0">
                 <div className="font-bold text-center">Start</div>
                 <div className="w-full text-center">
-                  {new Date(pL.startTimestamp).toLocaleDateString('de-DE')}
+                  {new Date(pL.start).toLocaleString('de-DE')}
                 </div>
               </div>
               <div className="flex justify-between sm:block sm:m-auto p-1 sm:p-0">
                 <div className="font-bold text-center">Ende</div>
                 <div className="w-full text-center">
-                  {new Date(pL.endTimestamp).toLocaleDateString('de-DE')}
+                  {new Date(pL.end).toLocaleString('de-DE')}
                 </div>
-              </div>
-              <div className="flex justify-between sm:block sm:m-auto p-1 sm:p-0">
-                <div className="font-bold text-center">Fach</div>
-                <div className="w-full text-center">{pL.subject}</div>
               </div>
             </div>
             <div className="w-fit text-center relative">

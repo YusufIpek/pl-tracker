@@ -9,8 +9,9 @@ import {
   getFirestore,
   setDoc,
   Timestamp,
+  updateDoc,
 } from 'firebase/firestore';
-import { PrivateLesson } from '../Models/PrivateLesson';
+import { PrivateLesson } from '../models/PrivateLesson';
 import {
   browserLocalPersistence,
   browserSessionPersistence,
@@ -21,6 +22,7 @@ import {
   signInWithRedirect,
   User,
 } from 'firebase/auth';
+import { removeIdAttribute } from '../helper/utils';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -55,12 +57,12 @@ export async function getPrivateLessons(): Promise<PrivateLesson[]> {
       const data = item.data();
       result.push({
         id: item.id,
-        startTimestamp: (data.startTimestamp as Timestamp).toDate(),
-        endTimestamp: (data.endTimestamp as Timestamp).toDate(),
-        studentName: data.studentName,
+        start: data.start,
+        end: data.end,
+        student: data.student,
         subject: data.subject,
         notice: data.notice,
-      } as PrivateLesson);
+      });
     });
     return result;
   }
@@ -74,7 +76,7 @@ export async function addPrivateLesson(
   const currentUser = getUser();
   if (currentUser) {
     const col = collection(db, currentUser.uid);
-    const response = await addDoc(col, privateLesson);
+    const response = await addDoc(col, removeIdAttribute(privateLesson));
     privateLesson.id = response.id;
     return true;
   }
@@ -88,6 +90,19 @@ export async function deletePrivateLesson(id: string): Promise<boolean> {
     await deleteDoc(doc(db, currentUser.uid, id));
     return true;
   }
+  return false;
+}
+
+export async function updatePrivateLesson(
+  privateLesson: PrivateLesson
+): Promise<boolean> {
+  const currentUser = getUser();
+  if (currentUser && privateLesson.id) {
+    const ref = doc(db, currentUser.uid, privateLesson.id);
+    updateDoc(ref, removeIdAttribute({ ...privateLesson }));
+    return true;
+  }
+
   return false;
 }
 

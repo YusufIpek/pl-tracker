@@ -1,33 +1,63 @@
-import { Timestamp } from 'firebase/firestore';
-import React, { FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import CButton from '../Components/CButton';
-import Input from '../Components/Input';
-import { addPrivateLesson } from '../Firebase/Firebase';
-import { addPrivateLesson as addAction } from '../Redux/slicer';
-import { PrivateLesson } from '../Models/PrivateLesson';
-import { useAppDispatch } from '../Redux/hooks';
+import { FormEvent, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import CButton from '../components/CButton';
+import Input from '../components/Input';
+import { addPrivateLesson, updatePrivateLesson } from '../firebase/Firebase';
+import {
+  addPrivateLesson as addAction,
+  updatePrivateLesson as updateAction,
+} from '../redux/slicer';
+import { PrivateLesson } from '../models/PrivateLesson';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 
 export default function AddPL() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const privateLessons: PrivateLesson[] = useAppSelector((state) => state);
+  const [privateLesson, setPrivateLesson] = useState<PrivateLesson>({
+    id: '',
+    end: '',
+    start: '',
+    notice: '',
+    student: '',
+    subject: '',
+  });
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (id) {
+      setPrivateLesson(
+        (lastValue) =>
+          privateLessons.find((item) => item.id === id) ?? lastValue
+      );
+    }
+  }, [id, privateLessons]);
+
+  const changeHandler = (event: FormEvent<HTMLInputElement>) => {
+    const { name, value } = event.target as any;
+
+    setPrivateLesson((lastValue) => {
+      return { ...lastValue, [name]: value };
+    });
+  };
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const values = new FormData(event.target as HTMLFormElement);
-
-    const privateLesson: PrivateLesson = {
-      endTimestamp: new Date(values.get('end')?.toString() as string),
-      startTimestamp: new Date(values.get('start')?.toString() as string),
-      notice: values.get('notice')?.toString(),
-      studentName: values.get('student')?.toString(),
-      subject: values.get('subject')?.toString(),
-    };
 
     (async () => {
+      if (id) {
+        // update
+        const response = await updatePrivateLesson(privateLesson);
+        if (response) {
+          dispatch(updateAction(privateLesson));
+          navigate('/');
+        }
+        return;
+      }
+
+      // add new
       addPrivateLesson(privateLesson).then((response) => {
         dispatch(addAction(privateLesson));
-
         if (response) {
           navigate('/');
         }
@@ -42,23 +72,45 @@ export default function AddPL() {
         type="datetime-local"
         className="mt-2"
         name="start"
+        value={privateLesson?.start ?? ''}
+        onChange={changeHandler}
+        required={true}
       />
       <Input
         placeholder="Ende"
         type="datetime-local"
         className="mt-2"
         name="end"
+        value={privateLesson?.end ?? ''}
+        onChange={changeHandler}
+        required={true}
       />
       <Input
         placeholder="Schüler"
         type="text"
         className="mt-2"
         name="student"
+        value={privateLesson?.student ?? ''}
+        onChange={changeHandler}
       />
-      <Input placeholder="Fach" type="text" className="mt-2" name="subject" />
-      <Input placeholder="Notiz" type="text" className="mt-2" name="notice" />
+      <Input
+        placeholder="Fach"
+        type="text"
+        className="mt-2"
+        name="subject"
+        value={privateLesson?.subject ?? ''}
+        onChange={changeHandler}
+      />
+      <Input
+        placeholder="Notiz"
+        type="text"
+        className="mt-2"
+        name="notice"
+        value={privateLesson?.notice ?? ''}
+        onChange={changeHandler}
+      />
 
-      <CButton text="Speichern" className="mt-2" />
+      <CButton text={id ? 'Bearbeiten' : 'Speichern'} className="mt-2" />
     </form>
   );
 }

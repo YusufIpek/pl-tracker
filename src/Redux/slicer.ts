@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getPrivateLessons } from '../Firebase/Firebase';
-import { PrivateLesson } from '../Models/PrivateLesson';
+import { getPrivateLessons } from '../firebase/Firebase';
+import { PrivateLesson } from '../models/PrivateLesson';
 import { RootState } from './store';
 
 export const fetchAllData = createAsyncThunk(
@@ -28,6 +28,12 @@ export const counterSlice = createSlice({
     removePrivateLesson: (state, action: PayloadAction<string>) => {
       return state.filter((item) => item.id !== action.payload);
     },
+    updatePrivateLesson: (state, action: PayloadAction<PrivateLesson>) => {
+      return [
+        ...state.filter((item) => item.id !== action.payload.id),
+        action.payload,
+      ];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -38,7 +44,8 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { addPrivateLesson, removePrivateLesson } = counterSlice.actions;
+export const { addPrivateLesson, removePrivateLesson, updatePrivateLesson } =
+  counterSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state;
