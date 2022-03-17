@@ -1,14 +1,14 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import CButton from '../components/CButton';
-import Input from '../components/Input';
-import { addPrivateLesson, updatePrivateLesson } from '../firebase/Firebase';
+import CButton from '../components2/CButton';
+import Input from '../components2/Input';
+import { addPrivateLesson, updatePrivateLesson } from '../firebase2/Firebase';
 import {
   addPrivateLesson as addAction,
   updatePrivateLesson as updateAction,
-} from '../redux/slicer';
-import { PrivateLesson } from '../models/PrivateLesson';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+} from '../redux2/slicer';
+import { PrivateLesson } from '../models2/PrivateLesson';
+import { useAppDispatch, useAppSelector } from '../redux2/hooks';
 
 export default function AddPL() {
   const navigate = useNavigate();

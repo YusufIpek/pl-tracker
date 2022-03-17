@@ -1,5 +1,5 @@
 import React from 'react';
-import { signInWithGoogle } from '../firebase/Firebase';
+import { signInWithGoogle } from '../firebase2/Firebase';
 
 export default function Login() {
   return (

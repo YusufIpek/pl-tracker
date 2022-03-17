@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getPrivateLessons } from '../firebase/Firebase';
-import { PrivateLesson } from '../models/PrivateLesson';
+import { getPrivateLessons } from '../firebase2/Firebase';
+import { PrivateLesson } from '../models2/PrivateLesson';
 import { RootState } from './store';
 
 export const fetchAllData = createAsyncThunk(
