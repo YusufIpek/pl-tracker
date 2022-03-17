@@ -39,14 +39,26 @@ export default function Content() {
         return (
           <div key={pL.id} className="flex mt-2  bg-gray-200 rounded-md">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 py-3 pl-3 w-full">
-              <div className="m-auto">{pL.studentName}</div>
-              <div className="m-auto">
-                {new Date(pL.startTimestamp).toLocaleDateString('de-DE')}
+              <div className="flex justify-between sm:block sm:m-auto p-1 sm:p-0">
+                <div className="font-bold text-center">Schüler</div>
+                <div className="w-full text-center">{pL.studentName}</div>
               </div>
-              <div className="m-auto">
-                {new Date(pL.endTimestamp).toLocaleDateString('de-DE')}
+              <div className="flex justify-between sm:block sm:m-auto p-1 sm:p-0">
+                <div className="font-bold text-center">Start</div>
+                <div className="w-full text-center">
+                  {new Date(pL.startTimestamp).toLocaleDateString('de-DE')}
+                </div>
               </div>
-              <div className="m-auto">{pL.subject}</div>
+              <div className="flex justify-between sm:block sm:m-auto p-1 sm:p-0">
+                <div className="font-bold text-center">Ende</div>
+                <div className="w-full text-center">
+                  {new Date(pL.endTimestamp).toLocaleDateString('de-DE')}
+                </div>
+              </div>
+              <div className="flex justify-between sm:block sm:m-auto p-1 sm:p-0">
+                <div className="font-bold text-center">Fach</div>
+                <div className="w-full text-center">{pL.subject}</div>
+              </div>
             </div>
             <div className="w-fit text-center relative">
               <button
