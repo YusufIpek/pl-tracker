@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { signOut } from '../firebase2/Firebase';
+import { signOut } from '../firebase/Firebase';
 
 export default function Header({
   photoURL,

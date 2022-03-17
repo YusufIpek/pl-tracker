@@ -7,14 +7,11 @@ import {
   doc,
   getDocs,
   getFirestore,
-  setDoc,
-  Timestamp,
   updateDoc,
 } from 'firebase/firestore';
-import { PrivateLesson } from '../models2/PrivateLesson';
+import { PrivateLesson } from '../models/PrivateLesson';
 import {
   browserLocalPersistence,
-  browserSessionPersistence,
   getAuth,
   getRedirectResult,
   GoogleAuthProvider,
@@ -22,7 +19,7 @@ import {
   signInWithRedirect,
   User,
 } from 'firebase/auth';
-import { removeIdAttribute } from '../helper2/utils';
+import { removeIdAttribute } from '../helper/utils';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries

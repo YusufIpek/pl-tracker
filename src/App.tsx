@@ -1,14 +1,14 @@
 import { User } from 'firebase/auth';
 import { useEffect, useState } from 'react';
-import { checkRedirectUriResult, getLoggedInUser } from './firebase2/Firebase';
-import Header from './pages2/Header';
-import Login from './pages2/Login';
-import Content from './pages2/Content';
-import { fetchAllData } from './redux2/slicer';
-import { store } from './redux2/store';
-import Loading from './pages2/Loading';
+import { checkRedirectUriResult, getLoggedInUser } from './firebase/Firebase';
+import Header from './pages/Header';
+import Login from './pages/Login';
+import Content from './pages/Content';
+import { fetchAllData } from './redux/slicer';
+import { store } from './redux/store';
+import Loading from './pages/Loading';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AddPL from './pages2/AddPL';
+import AddPL from './pages/AddPL';
 
 export default function App() {
   const [user, setUser] = useState<User | null>(null);

@@ -1,13 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
-import ActionButton from '../components2/ActionButton';
-import Input from '../components2/Input';
-import { PrivateLesson } from '../models2/PrivateLesson';
-import { useAppDispatch, useAppSelector } from '../redux2/hooks';
+import ActionButton from '../components/ActionButton';
+import Input from '../components/Input';
+import { PrivateLesson } from '../models/PrivateLesson';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { faTrashCan, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { deletePrivateLesson } from '../firebase2/Firebase';
-import { removePrivateLesson as removeAction } from '../redux2/slicer';
+import { deletePrivateLesson } from '../firebase/Firebase';
+import { removePrivateLesson as removeAction } from '../redux/slicer';
 
 library.add(faTrashCan, faEdit);
 
