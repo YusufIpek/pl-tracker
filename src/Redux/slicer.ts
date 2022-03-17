@@ -38,7 +38,7 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { addPrivateLesson } = counterSlice.actions;
+export const { addPrivateLesson, removePrivateLesson } = counterSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state;

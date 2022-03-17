@@ -3,6 +3,7 @@ import { initializeApp } from 'firebase/app';
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDocs,
   getFirestore,
@@ -40,8 +41,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 
+function getUser(): User | null {
+  return getAuth().currentUser;
+}
+
 export async function getPrivateLessons(): Promise<PrivateLesson[]> {
-  const currentUser = getAuth().currentUser;
+  const currentUser = getUser();
   if (currentUser) {
     const col = collection(db, currentUser.uid);
     const querySnapshot = await getDocs(col);
@@ -66,7 +71,7 @@ export async function getPrivateLessons(): Promise<PrivateLesson[]> {
 export async function addPrivateLesson(
   privateLesson: PrivateLesson
 ): Promise<boolean> {
-  const currentUser = getAuth().currentUser;
+  const currentUser = getUser();
   if (currentUser) {
     const col = collection(db, currentUser.uid);
     const response = await addDoc(col, privateLesson);
@@ -74,6 +79,15 @@ export async function addPrivateLesson(
     return true;
   }
 
+  return false;
+}
+
+export async function deletePrivateLesson(id: string): Promise<boolean> {
+  const currentUser = getUser();
+  if (currentUser) {
+    await deleteDoc(doc(db, currentUser.uid, id));
+    return true;
+  }
   return false;
 }
 
