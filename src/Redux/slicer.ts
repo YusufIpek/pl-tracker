@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getPrivateLessons } from '../Firebase/Firebase';
-import { PrivateLesson } from '../Models/PrivateLesson'
-import { RootState } from './store'
+import { PrivateLesson } from '../Models/PrivateLesson';
+import { RootState } from './store';
 
 export const fetchAllData = createAsyncThunk(
   'privateLessons/fetchPrivateLessons',
@@ -12,7 +12,7 @@ export const fetchAllData = createAsyncThunk(
 );
 
 // Define the initial state using that type
-const initialState: PrivateLesson[] = []
+const initialState: PrivateLesson[] = [];
 
 export const counterSlice = createSlice({
   name: 'privateLessons',
@@ -24,21 +24,23 @@ export const counterSlice = createSlice({
     },
     addPrivateLessons: (state, action: PayloadAction<PrivateLesson[]>) => {
       return [...state, ...action.payload];
-    }
+    },
+    removePrivateLesson: (state, action: PayloadAction<string>) => {
+      return state.filter((item) => item.id !== action.payload);
+    },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(fetchAllData.pending, (state, action) => {
-      })
+      .addCase(fetchAllData.pending, (state, action) => {})
       .addCase(fetchAllData.fulfilled, (state, action) => {
         return [...action.payload];
-    })
-  }
-})
+      });
+  },
+});
 
-export const { addPrivateLesson } = counterSlice.actions
+export const { addPrivateLesson } = counterSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectCount = (state: RootState) => state
+export const selectCount = (state: RootState) => state;
 
-export default counterSlice.reducer
+export default counterSlice.reducer;

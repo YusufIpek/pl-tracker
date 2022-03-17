@@ -1,8 +1,8 @@
-export interface PrivateLesson{
-    id?: string;
-    startTimestamp: number;
-    endTimestamp: number;
-    studentName: string;
-    subject: string;
-    notice: string;
+export interface PrivateLesson {
+  id?: string;
+  startTimestamp: Date;
+  endTimestamp: Date;
+  studentName?: string;
+  subject?: string;
+  notice?: string;
 }

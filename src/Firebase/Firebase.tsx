@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import {
+  addDoc,
   collection,
   doc,
   getDocs,
@@ -39,23 +40,41 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 
-const privateLessonsRef = collection(db, 'privateLessonItems');
-
 export async function getPrivateLessons(): Promise<PrivateLesson[]> {
-  const querySnapshot = await getDocs(privateLessonsRef);
-  const result: PrivateLesson[] = [];
-  querySnapshot.forEach((item) => {
-    const data = item.data();
-    result.push({
-      id: item.id,
-      startTimestamp: (data.startTimestamp as Timestamp).toMillis(),
-      endTimestamp: (data.endTimestamp as Timestamp).toMillis(),
-      studentName: data.studentName,
-      subject: data.subject,
-      notice: data.notice,
-    } as PrivateLesson);
-  });
-  return result;
+  const currentUser = getAuth().currentUser;
+  if (currentUser) {
+    const col = collection(db, currentUser.uid);
+    const querySnapshot = await getDocs(col);
+    const result: PrivateLesson[] = [];
+    querySnapshot.forEach((item) => {
+      const data = item.data();
+      result.push({
+        id: item.id,
+        startTimestamp: (data.startTimestamp as Timestamp).toDate(),
+        endTimestamp: (data.endTimestamp as Timestamp).toDate(),
+        studentName: data.studentName,
+        subject: data.subject,
+        notice: data.notice,
+      } as PrivateLesson);
+    });
+    return result;
+  }
+
+  return [];
+}
+
+export async function addPrivateLesson(
+  privateLesson: PrivateLesson
+): Promise<boolean> {
+  const currentUser = getAuth().currentUser;
+  if (currentUser) {
+    const col = collection(db, currentUser.uid);
+    const response = await addDoc(col, privateLesson);
+    privateLesson.id = response.id;
+    return true;
+  }
+
+  return false;
 }
 
 export async function signInWithGoogle(): Promise<void> {

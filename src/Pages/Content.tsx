@@ -1,13 +1,13 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import React, { useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 import ActionButton from '../Components/ActionButton';
 import Input from '../Components/Input';
-import { getPrivateLessons } from '../Firebase/Firebase';
 import { PrivateLesson } from '../Models/PrivateLesson';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
-import { addPrivateLesson } from '../Redux/slicer';
-import AddPL from './AddPL';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
+
+library.add(faTrashCan);
 
 export default function Content() {
   const navigate = useNavigate();
@@ -15,16 +15,41 @@ export default function Content() {
   const privateLessons: PrivateLesson[] = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
+  const deleteEntry = (id?: string) => {
+    if (id) {
+      if (confirm('Eintrag löschen?')) {
+      }
+    }
+  };
+
   return (
     <div className="m-10">
       <Input type="text" placeholder="Suchen" name="search" />
       {privateLessons.map((pL) => {
         return (
-          <div key={pL.id} className="flex justify-evenly mt-2">
-            <div>{pL.studentName}</div>
-            <div>{new Date(pL.startTimestamp).toLocaleDateString('de-DE')}</div>
-            <div>{new Date(pL.endTimestamp).toLocaleDateString('de-DE')}</div>
-            <div>{pL.subject}</div>
+          <div
+            key={pL.id}
+            className="grid grid-cols-5 mt-2 p-3 bg-gray-200 rounded-md"
+          >
+            <div className="m-auto">{pL.studentName}</div>
+            <div className="m-auto">
+              {new Date(pL.startTimestamp).toLocaleDateString('de-DE')}
+            </div>
+            <div className="m-auto">
+              {new Date(pL.endTimestamp).toLocaleDateString('de-DE')}
+            </div>
+            <div className="m-auto">{pL.subject}</div>
+            <div className="w-full text-center">
+              <button
+                onClick={() => deleteEntry(pL.id)}
+                className="w-full h-[30px] md:w-[100px] bg-red-600 rounded-xl"
+              >
+                <FontAwesomeIcon
+                  icon={'trash-can'}
+                  className="cursor-pointer text-white m-auto"
+                />
+              </button>
+            </div>
           </div>
         );
       })}
