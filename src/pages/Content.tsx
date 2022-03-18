@@ -37,7 +37,10 @@ export default function Content() {
       <Input type="text" placeholder="Suchen" name="search" />
       {privateLessons.map((pL) => {
         return (
-          <div key={pL.id} className="flex mt-2  bg-gray-200 rounded-md">
+          <div
+            key={pL.id}
+            className="flex flex-col sm:flex-row mt-2 bg-gray-200 rounded-md"
+          >
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 py-3 pl-3 w-full">
               <div className="flex justify-between sm:block sm:m-auto p-1 sm:p-0">
                 <div className="font-bold text-center">Schüler</div>
@@ -60,10 +63,10 @@ export default function Content() {
                 </div>
               </div>
             </div>
-            <div className="w-fit text-center relative">
+            <div className="w-full sm:w-fit text-center relative">
               <button
                 onClick={() => editEntry(pL.id)}
-                className="h-full w-[60px] bg-blue-600 rounded-tl-md rounded-bl-md"
+                className="h-[40px] sm:h-full w-full sm:w-[60px] bg-blue-600"
               >
                 <FontAwesomeIcon
                   icon={'edit'}
@@ -71,10 +74,10 @@ export default function Content() {
                 />
               </button>
             </div>
-            <div className="w-fit text-center relative">
+            <div className="w-full sm:w-fit text-center relative">
               <button
                 onClick={() => deleteEntry(pL.id)}
-                className="h-full w-[60px] bg-red-600 rounded-tr-md rounded-br-md"
+                className="h-[40px] sm:h-full w-full sm:w-[60px] bg-red-600 rounded-bl-md rounded-br-md sm:rounded-bl-none sm:rounded-tr-md sm:rounded-br-md"
               >
                 <FontAwesomeIcon
                   icon={'trash-can'}

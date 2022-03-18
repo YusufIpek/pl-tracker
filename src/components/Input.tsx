@@ -26,7 +26,7 @@ export default function Input(props: Props) {
       <input
         type={props.type}
         className={
-          'shadow appearance-none border leading-8 rounded text-gray-700 p-3 focus:outline-blue-400 focus:shadow-outline w-full ' +
+          'bg-white shadow appearance-none border leading-8 rounded text-gray-700 p-3 focus:outline-blue-400 focus:shadow-outline w-full ' +
           props.className
         }
         name={props.name}
