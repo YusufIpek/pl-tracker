@@ -8,6 +8,7 @@ import { faTrashCan, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { deletePrivateLesson } from '../firebase/Firebase';
 import { removePrivateLesson as removeAction } from '../redux/slicer';
+import ContentRow from './ContentRow';
 
 library.add(faTrashCan, faEdit);
 
@@ -41,28 +42,17 @@ export default function Content() {
             key={pL.id}
             className="flex flex-col sm:flex-row mt-2 bg-gray-200 rounded-md"
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 py-3 pl-3 w-full">
-              <div className="flex justify-between sm:block sm:m-auto p-1 sm:p-0">
-                <div className="font-bold text-center">Schüler</div>
-                <div className="w-full text-center">{pL.student}</div>
-              </div>
-              <div className="flex justify-between sm:block sm:m-auto p-1 sm:p-0">
-                <div className="font-bold text-center">Fach</div>
-                <div className="w-full text-center">{pL.subject}</div>
-              </div>
-              <div className="flex justify-between sm:block sm:m-auto p-1 sm:p-0">
-                <div className="font-bold text-center">Start</div>
-                <div className="w-full text-center">
-                  {new Date(pL.start).toLocaleString('de-DE')}
-                </div>
-              </div>
-              <div className="flex justify-between sm:block sm:m-auto p-1 sm:p-0">
-                <div className="font-bold text-center">Ende</div>
-                <div className="w-full text-center">
-                  {new Date(pL.end).toLocaleString('de-DE')}
-                </div>
-              </div>
-            </div>
+            <ContentRow label="Schüler" value={pL.student}></ContentRow>
+            <ContentRow label="Fach" value={pL.subject}></ContentRow>
+            <ContentRow
+              label="Start"
+              value={new Date(pL.start).toLocaleString('de-DE')}
+            ></ContentRow>
+            <ContentRow
+              label="Ende"
+              value={new Date(pL.end).toLocaleString('de-DE')}
+            ></ContentRow>
+
             <div className="w-full sm:w-fit text-center relative">
               <button
                 onClick={() => editEntry(pL.id)}
