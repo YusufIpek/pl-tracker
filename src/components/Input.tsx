@@ -33,6 +33,7 @@ export default function Input(props: Props) {
         onFocus={(event) => {
           if (props.type === 'datetime-local') {
             event.target.type = props.type;
+            event.target.click();
           }
         }}
         onBlur={(event) => {
