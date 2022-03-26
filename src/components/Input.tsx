@@ -24,12 +24,22 @@ export default function Input(props: Props) {
   return (
     <div>
       <input
-        type={props.type}
+        type={props.type === 'datetime-local' ? 'text' : props.type}
         className={
           'bg-white shadow appearance-none border leading-8 rounded text-gray-700 p-3 focus:outline-blue-400 focus:shadow-outline w-full ' +
           props.className
         }
         name={props.name}
+        onFocus={(event) => {
+          if (props.type === 'datetime-local') {
+            event.target.type = props.type;
+          }
+        }}
+        onBlur={(event) => {
+          if (props.type === 'datetime-local' && event.target.value === '') {
+            event.target.type = 'text';
+          }
+        }}
         placeholder={props.placeholder}
         required={props.required}
         value={getValue()}
