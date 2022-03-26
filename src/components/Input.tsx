@@ -24,7 +24,9 @@ export default function Input(props: Props) {
   return (
     <div>
       <input
-        type={props.type === 'datetime-local' ? 'text' : props.type}
+        type={
+          props.type === 'datetime-local' && !getValue() ? 'text' : props.type
+        }
         className={
           'bg-white shadow appearance-none border leading-8 rounded text-gray-700 p-3 focus:outline-blue-400 focus:shadow-outline w-full ' +
           props.className
