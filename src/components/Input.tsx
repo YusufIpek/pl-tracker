@@ -30,23 +30,6 @@ export default function Input(props: Props) {
           props.className
         }
         name={props.name}
-        onFocus={(event) => {
-          if (props.type === 'datetime-local') {
-            event.target.type = props.type;
-            setTimeout(() => {
-              try {
-                event.target?.click();
-              } catch (error) {
-                console.error(error);
-              }
-            });
-          }
-        }}
-        onBlur={(event) => {
-          if (props.type === 'datetime-local' && event.target.value === '') {
-            event.target.type = 'text';
-          }
-        }}
         placeholder={props.placeholder}
         required={props.required}
         value={getValue()}
