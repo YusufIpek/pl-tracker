@@ -79,7 +79,7 @@ export default function Content() {
         );
       })}
       <ActionButton
-        className="fixed bottom-[35px] right-[45px]"
+        className="fixed bottom-[25px] right-[25px]"
         text="+"
         onClick={() => {
           navigate('/add');
