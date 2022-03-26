@@ -33,10 +33,22 @@ export default function Content() {
     }
   };
 
+  const sortLessons = (lessons: PrivateLesson[]) => {
+    return lessons
+      .slice()
+      .sort((a, b) =>
+        new Date(a.start).getTime() > new Date(b.start).getTime()
+          ? -1
+          : new Date(a.start).getTime() === new Date(b.start).getTime()
+          ? 0
+          : 1
+      );
+  };
+
   return (
     <div className="m-10">
       <Input type="text" placeholder="Suchen" name="search" />
-      {privateLessons.map((pL) => {
+      {sortLessons(privateLessons).map((pL) => {
         return (
           <div
             key={pL.id}
