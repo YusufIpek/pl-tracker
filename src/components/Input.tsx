@@ -24,9 +24,7 @@ export default function Input(props: Props) {
   return (
     <div>
       <input
-        type={
-          props.type === 'datetime-local' && !getValue() ? 'text' : props.type
-        }
+        type={props.type}
         className={
           'bg-white shadow appearance-none border leading-8 rounded text-gray-700 p-3 focus:outline-blue-400 focus:shadow-outline w-full ' +
           props.className
@@ -36,7 +34,11 @@ export default function Input(props: Props) {
           if (props.type === 'datetime-local') {
             event.target.type = props.type;
             setTimeout(() => {
-              event.target.click();
+              try {
+                event.target?.click();
+              } catch (error) {
+                console.error(error);
+              }
             });
           }
         }}
