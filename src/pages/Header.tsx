@@ -11,7 +11,7 @@ export default function Header({
   const navigate = useNavigate();
   return (
     <div className="flex items-center justify-between p-2 bg-blue-900 text-white">
-      <div className="ml-2 text-lg">
+      <div className="ml-3 text-lg">
         <span className="cursor-pointer" onClick={() => navigate('/')}>
           Nachilfe Tracker
         </span>
