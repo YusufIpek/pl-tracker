@@ -10,7 +10,7 @@ export default function (props: Props) {
     <div className="text-center">
       <button
         className={
-          'absolute bottom-0 left-0 sm:relative w-full h-[50px] bg-green-600 p-2 text-white sm:rounded-md hover:bg-green-500 ' +
+          'absolute bottom-0 left-0 sm:relative sm:mt-5 w-full h-[50px] bg-green-600 p-2 text-white sm:rounded-md hover:bg-green-500 ' +
           props.className
         }
       >
