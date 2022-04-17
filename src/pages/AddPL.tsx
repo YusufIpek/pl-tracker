@@ -118,7 +118,7 @@ export default function AddPL() {
           onChange={changeHandler}
         />
       </div>
-      <div className="mt-5 mb-5">
+      <div className="mt-5 mb-20 sm:mb-5">
         <Label htmlFor="notice">Notiz</Label>
         <Input
           id="notice"
