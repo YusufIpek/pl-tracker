@@ -13,11 +13,13 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.0",
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@reduxjs/toolkit": "^1.8.0",
+    "@types/styled-components": "^5.1.25",
     "firebase": "^9.6.8",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.2",
+    "styled-components": "^5.3.5",
     "tw-elements": "^1.0.0-alpha11"
   },
   "devDependencies": {

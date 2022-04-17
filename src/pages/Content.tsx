@@ -34,6 +34,7 @@ export default function Content() {
   };
 
   const sortLessons = (lessons: PrivateLesson[]) => {
+    // descending order
     return lessons
       .slice()
       .sort((a, b) =>
